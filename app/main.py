@@ -19,15 +19,17 @@ def strip_html(text):
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse(request, "index.html", {"title": "쇼핑 검색"})
+    fav_count = await mongodb.engine.count(ShopModel, ShopModel.is_favorite == True)
+    return templates.TemplateResponse(request, "index.html", {"title": "쇼핑 검색", "fav_count": fav_count})
 
 @app.get("/search", response_class=HTMLResponse)
 async def search(request: Request, q: str = ""):
+    fav_count = await mongodb.engine.count(ShopModel, ShopModel.is_favorite == True)
     if not q:
         return templates.TemplateResponse(
             request=request,
             name="index.html",
-            context={"message": "검색어를 입력해주세요"},
+            context={"message": "검색어를 입력해주세요", "fav_count": fav_count},
         )
 
     scraper = NaverShopScraper()
@@ -59,6 +61,7 @@ async def search(request: Request, q: str = ""):
             "keyword": q,
             "items": shop_models,
             "next_url": f"/search?q={q}",
+            "fav_count": fav_count,
         },
     )
 
@@ -97,6 +100,7 @@ async def toggle_favorite(
 @app.get("/favorites", response_class=HTMLResponse)
 async def favorites(request: Request):
     items = await mongodb.engine.find(ShopModel, ShopModel.is_favorite == True)
+    fav_count = len(items)
     return templates.TemplateResponse(
         request=request,
         name="index.html",
@@ -104,6 +108,7 @@ async def favorites(request: Request):
             "title": "즐겨찾기 목록",
             "items": items,
             "next_url": "/favorites",
+            "fav_count": fav_count,
         },
     )
 

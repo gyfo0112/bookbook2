@@ -12,9 +12,14 @@
     <form class="search-form" action="/search" method="get" id="searchForm">
       <input type="text" name="q" placeholder="검색어를 입력하세요"
         value="{% if keyword %}{{ keyword }}{% endif %}">
-      <button type="submit" id="searchBtn">검색</button>
+      <button type="submit">검색</button>
     </form>
-    <a class="nav-fav" href="/favorites">⭐ 즐겨찾기</a>
+    <a class="nav-fav" href="/favorites">
+      ⭐ 즐겨찾기
+      {% if fav_count > 0 %}
+      <span class="fav-badge">{{ fav_count }}</span>
+      {% endif %}
+    </a>
   </header>
 
   <div id="loading" class="loading-overlay" style="display:none;">
@@ -22,20 +27,24 @@
     <p>검색 중...</p>
   </div>
 
-  {% if not items and not message %}
-    {% if title == '즐겨찾기 목록' %}
+  {% if keyword and items|length == 0 %}
+    <div class="hero">
+      <div class="hero-emoji">🔍</div>
+      <h2>검색 결과가 없어요!</h2>
+      <p>다른 검색어로 다시 시도해보세요.</p>
+    </div>
+  {% elif title == '즐겨찾기 목록' and items|length == 0 %}
     <div class="hero">
       <div class="hero-emoji">⭐</div>
       <h2>즐겨찾기한 상품이 없어요!</h2>
       <p>마음에 드는 상품의 즐겨찾기 버튼을 눌러<br>여기에 저장해보세요.</p>
     </div>
-    {% else %}
+  {% elif not keyword and not title %}
     <div class="hero">
       <div class="hero-emoji">🛍️</div>
       <h2>원하는 상품을 검색해보세요!</h2>
       <p>네이버 쇼핑의 다양한 상품을 한눈에 확인하고<br>즐겨찾기로 저장해보세요.</p>
     </div>
-    {% endif %}
   {% else %}
   <div class="container">
     {% if message %}

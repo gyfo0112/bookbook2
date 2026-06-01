@@ -7,7 +7,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-
 header {
   background: #03c75a;
   padding: 0 40px;
@@ -17,7 +16,6 @@ header {
   justify-content: space-between;
   gap: 20px;
 }
-
 .logo {
   text-decoration: none;
   color: white;
@@ -26,14 +24,12 @@ header {
   white-space: nowrap;
   flex-shrink: 0;
 }
-
 .search-form {
   display: flex;
   flex: 1;
   max-width: 600px;
   gap: 8px;
 }
-
 .search-form input {
   flex: 1;
   padding: 10px 16px;
@@ -42,7 +38,6 @@ header {
   font-size: 15px;
   outline: none;
 }
-
 .search-form button {
   padding: 10px 20px;
   background: white;
@@ -54,9 +49,7 @@ header {
   cursor: pointer;
   white-space: nowrap;
 }
-
 .search-form button:hover { background: #f0f0f0; }
-
 .nav-fav {
   text-decoration: none;
   color: white;
@@ -68,10 +61,25 @@ header {
   border: 2px solid white;
   border-radius: 24px;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
 }
-
 .nav-fav:hover { background: rgba(255,255,255,0.2); }
-
+.fav-badge {
+  background: white;
+  color: #03c75a;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 .hero {
   text-align: center;
   flex: 1;
@@ -81,22 +89,18 @@ header {
   justify-content: center;
   padding: 20px;
 }
-
 .hero-emoji { font-size: 64px; margin-bottom: 20px; }
-
 .hero h2 {
   font-size: 26px;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 }
-
 .hero p {
   font-size: 16px;
   color: #888;
   line-height: 1.7;
 }
-
 .container {
   max-width: 1100px;
   margin: 30px auto;
@@ -104,17 +108,14 @@ header {
   flex: 1;
   width: 100%;
 }
-
 .message { text-align: center; color: #888; margin-top: 40px; font-size: 16px; }
 .result-title { font-size: 18px; margin-bottom: 16px; color: #555; }
 .result-title span { color: #03c75a; font-weight: bold; }
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
-
 .card {
   background: white;
   border-radius: 12px;
@@ -137,7 +138,6 @@ header {
 }
 .card-price { color: #03c75a; font-size: 16px; font-weight: bold; margin-bottom: 4px; }
 .card-mall { font-size: 12px; color: #999; }
-
 .fav-form { margin-top: auto; }
 .fav-form button {
   width: 100%; padding: 10px; border: none;
@@ -146,7 +146,6 @@ header {
 }
 .fav-form button.active { background: #ffe066; color: #333; }
 .fav-form button:hover { background: #ffd700; color: #333; }
-
 footer {
   background: #222;
   color: #aaa;
@@ -155,9 +154,7 @@ footer {
   font-size: 13px;
   line-height: 1.6;
 }
-
 footer span { color: #03c75a; font-weight: bold; }
-
 .loading-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -170,13 +167,11 @@ footer span { color: #03c75a; font-weight: bold; }
   z-index: 999;
   gap: 16px;
 }
-
 .loading-overlay p {
   font-size: 16px;
   color: #555;
   font-weight: bold;
 }
-
 .spinner {
   width: 48px;
   height: 48px;
@@ -185,7 +180,6 @@ footer span { color: #03c75a; font-weight: bold; }
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
-
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
