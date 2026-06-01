@@ -1,105 +1,1 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>쇼핑 검색</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <header>
-    <a class="logo" href="/">🛒 쇼핑검색</a>
-    <form class="search-form" action="/search" method="get" id="searchForm">
-      <input type="text" name="q" placeholder="검색어를 입력하세요"
-        value="{% if keyword %}{{ keyword }}{% endif %}">
-      <button type="submit">검색</button>
-    </form>
-    <a class="nav-fav" href="/favorites">
-      ⭐ 즐겨찾기
-      {% if fav_count > 0 %}
-      <span class="fav-badge">{{ fav_count }}</span>
-      {% endif %}
-    </a>
-  </header>
-
-  <div id="loading" class="loading-overlay" style="display:none;">
-    <div class="spinner"></div>
-    <p>검색 중...</p>
-  </div>
-
-  {% if keyword and items|length == 0 %}
-    <div class="hero">
-      <div class="hero-emoji">🔍</div>
-      <h2>검색 결과가 없어요!</h2>
-      <p>다른 검색어로 다시 시도해보세요.</p>
-    </div>
-  {% elif title == '즐겨찾기 목록' and items|length == 0 %}
-    <div class="hero">
-      <div class="hero-emoji">⭐</div>
-      <h2>즐겨찾기한 상품이 없어요!</h2>
-      <p>마음에 드는 상품의 즐겨찾기 버튼을 눌러<br>여기에 저장해보세요.</p>
-    </div>
-  {% elif not keyword and not title %}
-    <div class="hero">
-      <div class="hero-emoji">🛍️</div>
-      <h2>원하는 상품을 검색해보세요!</h2>
-      <p>네이버 쇼핑의 다양한 상품을 한눈에 확인하고<br>즐겨찾기로 저장해보세요.</p>
-    </div>
-  {% else %}
-  <div class="container">
-    {% if message %}
-      <p class="message">{{ message }}</p>
-    {% endif %}
-
-    {% if title and not keyword and items %}
-      <p class="result-title"><span>{{ title }}</span></p>
-    {% endif %}
-
-    {% if items %}
-      {% if keyword %}
-        <p class="result-title"><span>{{ keyword }}</span> 검색 결과 {{ items|length }}개</p>
-      {% endif %}
-      <div class="grid">
-        {% for item in items %}
-        <div class="card">
-          <a class="card-link" href="{{ item.link }}" target="_blank">
-            <img src="{{ item.image }}" alt="{{ item.title }}"
-              onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">
-            <div class="card-body">
-              <p class="card-title">{{ item.title }}</p>
-              <p class="card-price">{{ '{:,}'.format(item.lprice) }}원</p>
-              <p class="card-mall">{{ item.mall_name }}</p>
-            </div>
-          </a>
-          <form class="fav-form" action="/favorites" method="post">
-            <input type="hidden" name="keyword" value="{{ item.keyword }}">
-            <input type="hidden" name="title" value="{{ item.title }}">
-            <input type="hidden" name="link" value="{{ item.link }}">
-            <input type="hidden" name="image" value="{{ item.image }}">
-            <input type="hidden" name="lprice" value="{{ item.lprice }}">
-            <input type="hidden" name="mall_name" value="{{ item.mall_name }}">
-            <input type="hidden" name="brand" value="{{ item.brand }}">
-            <input type="hidden" name="next_url" value="{{ next_url }}">
-            <button type="submit" class="{% if item.is_favorite %}active{% endif %}">
-              {% if item.is_favorite %}⭐ 즐겨찾기 해제{% else %}☆ 즐겨찾기 추가{% endif %}
-            </button>
-          </form>
-        </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-  {% endif %}
-
-  <footer>
-    <p><span>🛒 쇼핑검색</span> — 네이버 쇼핑 API 기반 검색 서비스</p>
-    <p>© 2025 김효래. All rights reserved.</p>
-  </footer>
-
-  <script>
-    document.getElementById('searchForm').addEventListener('submit', function() {
-      document.getElementById('loading').style.display = 'flex';
-    });
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="ko"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>쇼핑 검색</title>  <link rel="stylesheet" href="/static/style.css"></head><body>  <header>    <a class="logo" href="/">🛒 쇼핑검색</a>    <form class="search-form" action="/search" method="get" id="searchForm">      <input type="text" name="q" placeholder="검색어를 입력하세요"        value="{% if keyword %}{{ keyword }}{% endif %}">      <button type="submit">검색</button>    </form>    <a class="nav-fav" href="/favorites">      ⭐ 즐겨찾기      {% if fav_count > 0 %}      <span class="fav-badge">{{ fav_count }}</span>      {% endif %}    </a>  </header>  <div id="loading" class="loading-overlay" style="display:none;">    <div class="spinner"></div>    <p>검색 중...</p>  </div>  {% if keyword and items|length == 0 %}    <div class="hero">      <div class="hero-emoji">🔍</div>      <h2>검색 결과가 없어요!</h2>      <p>다른 검색어로 다시 시도해보세요.</p>    </div>  {% elif title == '즐겨찾기 목록' and items|length == 0 %}    <div class="hero">      <div class="hero-emoji">⭐</div>      <h2>즐겨찾기한 상품이 없어요!</h2>      <p>마음에 드는 상품의 즐겨찾기 버튼을 눌러<br>여기에 저장해보세요.</p>    </div>  {% elif title == '쇼핑 검색' %}    <div class="hero">      <div class="hero-emoji">🛍️</div>      <h2>원하는 상품을 검색해보세요!</h2>      <p>네이버 쇼핑의 다양한 상품을 한눈에 확인하고<br>즐겨찾기로 저장해보세요.</p>    </div>  {% else %}  <div class="container">    {% if message %}      <p class="message">{{ message }}</p>    {% endif %}    {% if title and not keyword and items %}      <p class="result-title"><span>{{ title }}</span></p>    {% endif %}    {% if items %}      {% if keyword %}        <p class="result-title"><span>{{ keyword }}</span> 검색 결과 {{ items|length }}개</p>      {% endif %}      <div class="grid">        {% for item in items %}        <div class="card">          <a class="card-link" href="{{ item.link }}" target="_blank">            <img src="{{ item.image }}" alt="{{ item.title }}"              onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">            <div class="card-body">              <p class="card-title">{{ item.title }}</p>              <p class="card-price">{{ '{:,}'.format(item.lprice) }}원</p>              <p class="card-mall">{{ item.mall_name }}</p>            </div>          </a>          <form class="fav-form" action="/favorites" method="post">            <input type="hidden" name="keyword" value="{{ item.keyword }}">            <input type="hidden" name="title" value="{{ item.title }}">            <input type="hidden" name="link" value="{{ item.link }}">            <input type="hidden" name="image" value="{{ item.image }}">            <input type="hidden" name="lprice" value="{{ item.lprice }}">            <input type="hidden" name="mall_name" value="{{ item.mall_name }}">            <input type="hidden" name="brand" value="{{ item.brand }}">            <input type="hidden" name="next_url" value="{{ next_url }}">            <button type="submit" class="{% if item.is_favorite %}active{% endif %}">              {% if item.is_favorite %}⭐ 즐겨찾기 해제{% else %}☆ 즐겨찾기 추가{% endif %}            </button>          </form>        </div>        {% endfor %}      </div>    {% endif %}  </div>  {% endif %}  <footer>    <p><span>🛒 쇼핑검색</span> — 네이버 쇼핑 API 기반 검색 서비스</p>    <p>© 2025 김효래. All rights reserved.</p>  </footer>  <script>    document.getElementById('searchForm').addEventListener('submit', function() {      document.getElementById('loading').style.display = 'flex';    });  </script></body></html>
