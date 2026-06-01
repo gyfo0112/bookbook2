@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+aiohttp
+motor
+odmantic
+python-dotenv
+jinja2
+python-multipart
